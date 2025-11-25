@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple To-Do List</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 30px; }
+    input { padding: 8px; width: 200px; }
+    button { padding: 8px; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 5px 0; }
+    .done { text-decoration: line-through; color: gray; }
+  </style>
+</head>
+<body>
+
+  <h2>Simple To-Do List</h2>
+  <input id="taskInput" type="text" placeholder="Enter task">
+  <button onclick="addTask()">Add</button>
+
+  <ul id="taskList"></ul>
+
+  <script>
+    function addTask() {
+      let input = document.getElementById("taskInput");
+      let text = input.value.trim();
+      if (text === "") return alert("Please enter a task!");
+
+      let li = document.createElement("li");
+      li.innerHTML = `
+        <span onclick="toggleDone(this)">${text}</span>
+        <button onclick="editTask(this)">Edit</button>
+        <button onclick="deleteTask(this)">Delete</button>
+      `;
+      document.getElementById("taskList").appendChild(li);
+      input.value = "";
+    }
+
+    function toggleDone(span) {
+      span.classList.toggle("done");
+    }
+
+    function editTask(btn) {
+      let li = btn.parentElement;
+      let newText = prompt("Edit task:", li.firstChild.textContent);
+      if (newText !== null) li.firstChild.textContent = newText;
+    }
+
+    function deleteTask(btn) {
+      btn.parentElement.remove();
+    }
+  </script>
+
+</body>
+</html>
+
